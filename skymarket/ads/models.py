@@ -6,7 +6,6 @@ from users.models import User
 
 
 class Ad(models.Model):
-    # TODO добавьте поля модели здесь
     title = models.CharField(max_length=100)
     price = models.PositiveIntegerField(validators=[MinValueValidator(0)])
     description = models.CharField(max_length=1000, null=True, blank=True)
@@ -23,7 +22,6 @@ class Ad(models.Model):
 
 
 class Comment(models.Model):
-    # TODO добавьте поля модели здесь
     text = models.CharField(max_length=1000)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE)

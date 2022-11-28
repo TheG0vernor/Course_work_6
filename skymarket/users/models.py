@@ -8,14 +8,11 @@ from django.utils.translation import gettext_lazy as _
 
 
 class UserRoles(Enum):
-    # TODO закончите enum-класс для пользователя
     USER = ('user', 'пользователь')
     ADMIN = ('admin', 'администратор')
 
 
 class User(AbstractBaseUser):
-    # TODO переопределение пользователя.
-    # TODO подробности также можно поискать в рекоммендациях к проекту
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = PhoneNumberField()
@@ -25,6 +22,8 @@ class User(AbstractBaseUser):
         choices=[i.value for i in UserRoles],
         default=UserRoles.USER.value[0]
     )
+    email = models.EmailField(unique=True)
+    is_active = models.BooleanField()
 
     USERNAME_FIELD = 'email'
 

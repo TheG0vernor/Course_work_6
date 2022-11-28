@@ -21,19 +21,19 @@ class AdViewSet(viewsets.ModelViewSet):
         'retrieve': AdDetailSerializer
     }
     default_serializer = AdSerializer
-    default_permission = [AllowAny()]
-    permissions = {
-        ...
-    }
+    # default_permission = [AllowAny()]
+    # permissions = {
+    #     ...
+    # }
 
-    def get(self, request, *args, **kwargs):
-        self.queryset = self.queryset.order_by('-created_at')  # если не будет работать вернуться и подключить внешние таблицы. перед этим подключить super().
+    # def get(self, request, *args, **kwargs):
+    #     self.queryset = self.queryset.order_by('-created_at')  # если не будет работать вернуться и подключить внешние таблицы. перед этим подключить super().
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.default_serializer)
 
-    def get_permissions(self):
-        return self.permissions.get(self.action, self.default_permission)
+    # def get_permissions(self):
+    #     return self.permissions.get(self.action, self.default_permission)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -41,8 +41,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
 def ads_user(request):
     user_qs = User.objects.annotate(ads=Count('ad'))
     paginator = Paginator(object_list=user_qs, per_page=PAGE_SIZE)
