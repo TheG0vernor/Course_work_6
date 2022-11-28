@@ -24,15 +24,18 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "djoser",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_simplejwt",
     "users",
     "ads",
     "redoc",
     "drf_spectacular",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -68,8 +71,15 @@ WSGI_APPLICATION = "skymarket.wsgi.application"
 
 # TODO здесь мы настраиваем аутентификацию и пагинацию
 REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ),
     "DEFAULT_SCHEMA_CLASS": 'drf_spectacular.openapi.AutoSchema'
 }
+
+PAGE_SIZE = 10
 
 SPECTACULAR_SETTINGS = {
     "TITLE": 'SkyMarketPlace API',
@@ -79,6 +89,10 @@ SPECTACULAR_SETTINGS = {
 
 # TODO здесь мы настраиваем Djoser
 DJOSER = {
+    'serializers': {
+        'user_create': 'users.serializers.UserRegistrationSerializer'
+    },
+    'LOGIN_FIELD': 'email'
 }
 
 # Database
@@ -88,7 +102,7 @@ DJOSER = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'skymarket',
+        'NAME': 'postgres',
         'USER': 'skymarket',
         'PASSWORD': 'skymarket',
         'HOST': 'localhost',
