@@ -41,8 +41,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
 
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def ads_user(request):
     user_qs = User.objects.annotate(ads=Count('ad'))
     paginator = Paginator(object_list=user_qs, per_page=PAGE_SIZE)
