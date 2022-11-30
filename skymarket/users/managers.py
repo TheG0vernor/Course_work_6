@@ -1,10 +1,17 @@
+from enum import Enum
+
 from django.contrib.auth.models import (
     BaseUserManager
 )
 
 
+class UserRoles(Enum):
+    USER = ('user', 'пользователь')
+    ADMIN = ('admin', 'администратор')
+
+
 class UserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, phone, password=None, role='user'):
+    def create_user(self, email, first_name, last_name, phone, password=None, role=UserRoles.USER.value[0]):
         if not email:
             raise ValueError('The user must have an email address')
         user = self.model(
@@ -27,7 +34,7 @@ class UserManager(BaseUserManager):
             last_name=last_name,
             phone=phone,
             password=password,
-            role='admin'
+            role=UserRoles.ADMIN.value[0]
         )
         user.save(using=self._db)
 

@@ -1,15 +1,8 @@
-from enum import Enum
-
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.db import models
-from users.managers import UserManager
+from users.managers import UserManager, UserRoles
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
-
-
-class UserRoles(Enum):
-    USER = ('user', 'пользователь')
-    ADMIN = ('admin', 'администратор')
 
 
 class User(AbstractBaseUser):
