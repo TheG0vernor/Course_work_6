@@ -4,13 +4,15 @@ from ads.models import Ad, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    model = Comment
-    fields = '__all__'
+    class Meta:
+        model = Comment
+        fields = '__all__'
 
 
 class AdSerializer(serializers.ModelSerializer):
-    model = Ad
-    fields = '__all__'
+    class Meta:
+        model = Ad
+        fields = '__all__'
 
 
 class AdDetailSerializer(serializers.ModelSerializer):
@@ -22,12 +24,13 @@ class AdDetailSerializer(serializers.ModelSerializer):
     )
     author_first_name = serializers.SlugRelatedField(
         read_only=True,
-        slug_field='first_name',
+        slug_field='author.first_name',
     )
     author_last_name = serializers.SlugRelatedField(
         read_only=True,
         slug_field='last_name',
     )
 
-    model = Ad
-    exclude = ['id', 'author']
+    class Meta:
+        model = Ad
+        exclude = ['id', 'author']
