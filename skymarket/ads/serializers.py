@@ -22,15 +22,21 @@ class AdDetailSerializer(serializers.ModelSerializer):
     author_id = serializers.PrimaryKeyRelatedField(
         read_only=True,
     )
-    author_first_name = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='author.first_name',
-    )
-    author_last_name = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='last_name',
-    )
+    author_first_name = serializers.SerializerMethodField()
+    author_last_name = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
+    @staticmethod
+    def get_author_first_name(ad):
+        return ad.author.first_name
+    @staticmethod
+    def get_author_last_name(ad):
+        return ad.author.last_name
+    @staticmethod
+    def get_phone(ad):
+        return str(ad.author.phone)
 
     class Meta:
         model = Ad
-        exclude = ['id', 'author']
+        fields = ['pk', 'author_id', 'author_first_name', 'author_last_name',
+                  'image', 'title', 'price', 'phone', 'description']
+
