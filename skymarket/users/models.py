@@ -16,7 +16,7 @@ class User(AbstractBaseUser):
         default=UserRoles.USER.value[0]
     )
     email = models.EmailField(unique=True)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
 
     @property
     def is_superuser(self):
