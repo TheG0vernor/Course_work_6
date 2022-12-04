@@ -30,7 +30,7 @@ class AdViewSet(viewsets.ModelViewSet):
     }
 
     def get(self, request, *args, **kwargs):
-        self.queryset = self.queryset.select_related('author').order_by('-created_at')  # если не будет работать вернуться и подключить внешние таблицы. перед этим подключить super().
+        self.queryset = self.queryset.select_related('author').order_by('-created_at')
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.default_serializer)
@@ -41,7 +41,6 @@ class AdViewSet(viewsets.ModelViewSet):
     #         return AdDetailSerializer
     #     else:
     #         return AdSerializer
-
 
     def get_permissions(self):
         return self.permissions.get(self.action, self.default_permission)
