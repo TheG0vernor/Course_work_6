@@ -14,7 +14,7 @@ class AdPagination(pagination.PageNumberPagination):
 
 class AdViewSet(viewsets.ModelViewSet):
     pagination_class = AdPagination
-    queryset = Ad.objects.all()
+    queryset = Ad.objects.all().select_related('author').order_by('-created_at')
 
     serializer_classes = {
         'retrieve': AdDetailSerializer
@@ -28,9 +28,6 @@ class AdViewSet(viewsets.ModelViewSet):
         'partial_update': [IsAuthenticated(), AdPermission()],
         'destroy': [IsAuthenticated(), AdPermission()]  # IsAdminUser() - встроенная permission администратор ли user. допускается использовать | в качестве или.
     }
-
-    def get(self, request, *args, **kwargs):
-        self.queryset = self.queryset.select_related('author').order_by('-created_at')
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.default_serializer)
